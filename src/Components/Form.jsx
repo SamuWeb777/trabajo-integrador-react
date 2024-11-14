@@ -27,6 +27,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
+  width: 100%;
   padding: 10px; /* Espaciado interno */
   border: none; /* Sin borde */
   border-radius: 5px; /* Bordes redondeados */
@@ -44,11 +45,15 @@ const Button = styled.button`
 const ErrorMessage = styled.p`
   color: red; /* Color del texto de error */
   font-size: 0.9rem; /* Tamaño de fuente del error */
+   text-align: center;
+  margin-top: 10px;
 `;
 
 const SuccessMessage = styled.p`
   color: green; /* Color del texto de éxito */
   font-size: 0.9rem; /* Tamaño de fuente del éxito */
+  text-align: center;
+  margin-top: 10px;
 `;
 
 
@@ -64,10 +69,12 @@ const handleSubmit = (e) => {
   e.preventDefault()
   if (name.length <= 5) {
     setError('verifique su informacion nuevamente')
+    setSuccess('');
     return
   }
   if (!/\S+@\S+\.\S+/.test(email)) {
     setError('Por favor verifique su información nuevamente');
+    setSuccess('');
     return;
   }
   setError('');
@@ -75,8 +82,8 @@ const handleSubmit = (e) => {
     console.log({ name, email });
 }
   return (
-    <FormContainer>
-      <form onSubmit={handleSubmit}>
+     <FormContainer >
+      
       <Input
           type="text"
           placeholder="Nombre completo"
@@ -89,10 +96,10 @@ const handleSubmit = (e) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Button type="submit">Enviar</Button>
-      </form>
-      {error && <p className="error">{error}</p>}
-      {success && <p className="success">{success}</p>}
+        <Button type="submit" onClick={handleSubmit}>Enviar</Button>
+      
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+        {success && <SuccessMessage>{success}</SuccessMessage>}
     </FormContainer>
   );
 };
